@@ -236,11 +236,11 @@ arithop_tnumber_number2(const Temporal *temp, Datum value, meosType basetype,
     lfinfo.numparam = 0;
     lfinfo.args = true;
     lfinfo.argtype[0] = temptype_basetype(temp->temptype);
-    fprintf(stderr, "lfinfo.argtype[0] = %d", lfinfo.argtype[0]);
-    fprintf(stderr, "temptype_basetype(temp->temptype) = %d", temptype_basetype(temp->temptype));
+    fprintf(stderr, "lfinfo.argtype[0] = %d\n", lfinfo.argtype[0]);
+    fprintf(stderr, "temptype_basetype(temp->temptype) = %d\n", temptype_basetype(temp->temptype));
     lfinfo.argtype[1] = basetype;
-    fprintf(stderr, "lfinfo.argtype[1] = %d", lfinfo.argtype[1]);
-    fprintf(stderr, "basetype = %d", basetype);
+    fprintf(stderr, "lfinfo.argtype[1] = %d\n", lfinfo.argtype[1]);
+    fprintf(stderr, "basetype = %d\n", basetype);
     lfinfo.restype = (temp->temptype == T_TINT && basetype == T_INT4) ?
                      T_TINT : T_TFLOAT;
     /* This parameter is not used for temp <op> base */

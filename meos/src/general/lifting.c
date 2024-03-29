@@ -269,6 +269,10 @@ static Datum
 tfunc_base_base(Datum value1, Datum value2, LiftedFunctionInfo *lfinfo)
 {
   /* Lifted functions may have from 0 to MAX_PARAMS parameters */
+  fprintf(stderr, "tfunc_base_base lfinfo->args = %d \n", lfinfo->args);
+  fprintf(stderr, "tfunc_base_base lfinfo->invert = %d \n", lfinfo->invert);
+  fprintf(stderr, "tfunc_base_base lfinfo->argtype[0] = %d \n", lfinfo->argtype[0]);
+  fprintf(stderr, "tfunc_base_base lfinfo->argtype[1] = %d \n", lfinfo->argtype[1]);
   assert(lfinfo->numparam >= 0 && lfinfo->numparam <= 1);
   if (lfinfo->numparam == 0)
   {
