@@ -356,6 +356,10 @@ datum_div(Datum l, Datum r, meosType type)
   }
 }
 
+Datum datum_div2(Datum l, Datum r, meosType type1, meosType typ2) {
+    return datum_div(l, r, type1);
+}
+
 /*****************************************************************************
  * Hash functions on datums
  *****************************************************************************/

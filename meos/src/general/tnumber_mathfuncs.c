@@ -202,6 +202,52 @@ arithop_tnumber_number(const Temporal *temp, Datum value, meosType basetype,
   return tfunc_temporal_base(temp, value, &lfinfo);
 }
 
+Temporal *
+arithop_tnumber_number2(const Temporal *temp, Datum value, meosType basetype,
+                       TArithmetic oper, Datum (*func)(Datum, Datum, meosType, meosType), bool invert)
+{
+    assert(tnumber_basetype(basetype));
+    assert(temptype_basetype(temp->temptype) == basetype);
+    /* If division test whether the denominator is zero */
+    if (oper == DIV)
+    {
+        if (invert)
+        {
+            if (ever_eq_temporal_base(temp, Float8GetDatum(0.0)))
+            {
+                meos_error(ERROR, MEOS_ERR_INVALID_ARG_VALUE, "Division by zero");
+                return NULL;
+            }
+        }
+        else
+        {
+            double d = datum_double(value, basetype);
+            if (fabs(d) < MEOS_EPSILON)
+            {
+                meos_error(ERROR, MEOS_ERR_INVALID_ARG_VALUE, "Division by zero");
+                return NULL;
+            }
+        }
+    }
+
+    LiftedFunctionInfo lfinfo;
+    memset(&lfinfo, 0, sizeof(LiftedFunctionInfo));
+    lfinfo.func = (varfunc) func;
+    lfinfo.numparam = 0;
+    lfinfo.args = true;
+    lfinfo.argtype[0] = temptype_basetype(temp->temptype);
+    lfinfo.argtype[1] = basetype;
+    lfinfo.restype = (temp->temptype == T_TINT && basetype == T_INT4) ?
+                     T_TINT : T_TFLOAT;
+    /* This parameter is not used for temp <op> base */
+    lfinfo.reslinear = false;
+    lfinfo.invert = invert;
+    lfinfo.discont = CONTINUOUS;
+    lfinfo.tpfunc_base = NULL;
+    lfinfo.tpfunc = NULL;
+    return tfunc_temporal_base(temp, value, &lfinfo);
+}
+
 /**
  * @brief Generic arithmetic operator on two temporal numbers
  * @param[in] temp1,temp2 Temporal numbers

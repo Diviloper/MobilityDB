@@ -94,6 +94,7 @@ extern Datum datum_add(Datum l, Datum r, meosType type);
 extern Datum datum_sub(Datum l, Datum r, meosType type);
 extern Datum datum_mult(Datum l, Datum r, meosType type);
 extern Datum datum_div(Datum l, Datum r, meosType type);
+extern Datum datum_div2(Datum l, Datum r, meosType type1, meosType type2);
 
 /* Comparison functions on datums */
 

@@ -393,8 +393,8 @@ div_tfloat_float(const Temporal *temp, double d)
   if (! ensure_not_null((void *) temp) ||
       ! ensure_temporal_isof_type(temp, T_TFLOAT))
     return NULL;
-  return arithop_tnumber_number(temp, Float8GetDatum(d), T_FLOAT8, DIV,
-    &datum_div, INVERT_NO);
+  return arithop_tnumber_number2(temp, Float8GetDatum(d), T_FLOAT8, DIV,
+    &datum_div2, INVERT_NO);
 }
 
 /**
