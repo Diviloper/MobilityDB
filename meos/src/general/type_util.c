@@ -356,7 +356,9 @@ datum_div(Datum l, Datum r, meosType type)
   }
 }
 
-Datum datum_div2(Datum l, Datum r, meosType type1, meosType typ2) {
+Datum datum_div2(Datum l, Datum r, meosType type1, meosType type2) {
+    fprintf(stderr, "datum_div2 l: %f, r: %f, ltype: %d, rtype: %d\n",
+            DatumGetFloat8(l), DatumGetFloat8(r), type1, type2);
     return datum_div(l, r, type1);
 }
 
