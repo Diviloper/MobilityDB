@@ -222,6 +222,7 @@ arithop_tnumber_number2(const Temporal *temp, Datum value, meosType basetype,
         else
         {
             double d = datum_double(value, basetype);
+            fprintf(stderr, "arithop_tnumber_number2 d = %f", d);
             if (fabs(d) < MEOS_EPSILON)
             {
                 meos_error(ERROR, MEOS_ERR_INVALID_ARG_VALUE, "Division by zero");
@@ -236,11 +237,11 @@ arithop_tnumber_number2(const Temporal *temp, Datum value, meosType basetype,
     lfinfo.numparam = 0;
     lfinfo.args = true;
     lfinfo.argtype[0] = temptype_basetype(temp->temptype);
-    fprintf(stderr, "lfinfo.argtype[0] = %d\n", lfinfo.argtype[0]);
-    fprintf(stderr, "temptype_basetype(temp->temptype) = %d\n", temptype_basetype(temp->temptype));
+    fprintf(stderr, "arithop_tnumber_number2 lfinfo.argtype[0] = %d\n", lfinfo.argtype[0]);
+    fprintf(stderr, "arithop_tnumber_number2 temptype_basetype(temp->temptype) = %d\n", temptype_basetype(temp->temptype));
     lfinfo.argtype[1] = basetype;
-    fprintf(stderr, "lfinfo.argtype[1] = %d\n", lfinfo.argtype[1]);
-    fprintf(stderr, "basetype = %d\n", basetype);
+    fprintf(stderr, "arithop_tnumber_number2 lfinfo.argtype[1] = %d\n", lfinfo.argtype[1]);
+    fprintf(stderr, "arithop_tnumber_number2 basetype = %d\n", basetype);
     lfinfo.restype = (temp->temptype == T_TINT && basetype == T_INT4) ?
                      T_TINT : T_TFLOAT;
     /* This parameter is not used for temp <op> base */
