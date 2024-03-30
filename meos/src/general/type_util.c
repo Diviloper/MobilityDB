@@ -341,6 +341,8 @@ datum_mult(Datum l, Datum r, meosType type)
 Datum
 datum_div(Datum l, Datum r, meosType type)
 {
+    fprintf(stderr, "datum_div\n");
+    fprintf(stderr, "Type: %d", type);
   switch (type)
   {
     case T_INT4:

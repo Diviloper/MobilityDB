@@ -277,9 +277,13 @@ tfunc_base_base(Datum value1, Datum value2, LiftedFunctionInfo *lfinfo)
   if (lfinfo->numparam == 0)
   {
     if (lfinfo->args)
-      return lfinfo->invert ?
-        (*lfinfo->func)(value2, value1, lfinfo->argtype[1], lfinfo->argtype[0]) :
-        (*lfinfo->func)(value1, value2, lfinfo->argtype[0], lfinfo->argtype[1]);
+        if (lfinfo->invert) {
+            return (*lfinfo->func)(value2, value1, lfinfo->argtype[1], lfinfo->argtype[0]);
+        } else {
+            fprintf(stderr, "Calling func with value1 = %f, value2 = %f, argtype[0] = %d, argtype[1] = %d\n",
+                    datum_double(value1, lfinfo->argtype[0]), datum_double(value2, lfinfo->argtype[1]), lfinfo->argtype[0], lfinfo->argtype[1]);
+            return (*lfinfo->func)(value1, value2, lfinfo->argtype[0], lfinfo->argtype[1]);
+        }
     else
       return lfinfo->invert ?
         (*lfinfo->func)(value2, value1) : (*lfinfo->func)(value1, value2);
@@ -312,6 +316,7 @@ TInstant *
 tfunc_tinstant_base(const TInstant *inst, Datum value,
   LiftedFunctionInfo *lfinfo)
 {
+    fprintf(stderr, "tfunc_tinstant_base\n");
   Datum resvalue = tfunc_base_base(tinstant_val(inst), value, lfinfo);
   return tinstant_make_free(resvalue, lfinfo->restype, inst->t);
 }
@@ -326,6 +331,7 @@ TSequence *
 tfunc_tsequence_base(const TSequence *seq, Datum value,
   LiftedFunctionInfo *lfinfo)
 {
+    fprintf(stderr, "tfunc_tsequence_base\n");
   TInstant **instants = palloc(sizeof(TInstant *) * seq->count);
   for (int i = 0; i < seq->count; i++)
     instants[i] = tfunc_tinstant_base(TSEQUENCE_INST_N(seq, i), value, lfinfo);
