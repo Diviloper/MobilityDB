@@ -618,6 +618,8 @@ Temporal *
 tfunc_temporal_base(const Temporal *temp, Datum value,
   LiftedFunctionInfo *lfinfo)
 {
+    fprintf(stderr, "tfunct_temporal_base\n");
+    fprintf(stderr, "\tParams: %s\n", temporal_out(temp, 4));
   assert(temptype_subtype(temp->subtype));
   switch (temp->subtype)
   {

@@ -390,11 +390,14 @@ Temporal *
 div_tfloat_float(const Temporal *temp, double d)
 {
   /* Ensure validity of the arguments */
+  fprintf(stderr, "div_tfloat_float\n");
+  fprintf(stderr, "\tParams: %s, %f\n", tfloat_out(temp, 4), d);
   if (! ensure_not_null((void *) temp) ||
       ! ensure_temporal_isof_type(temp, T_TFLOAT))
     return NULL;
-  return arithop_tnumber_number2(temp, Float8GetDatum(d), T_FLOAT8, DIV,
-    &datum_div2, INVERT_NO);
+  fprintf(stderr, "\tValid params. Calling arithop_tnumber_number\n");
+  return arithop_tnumber_number(temp, Float8GetDatum(d), T_FLOAT8, DIV,
+    &datum_div, INVERT_NO);
 }
 
 /**

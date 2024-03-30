@@ -160,6 +160,8 @@ Temporal *
 arithop_tnumber_number(const Temporal *temp, Datum value, meosType basetype,
   TArithmetic oper, Datum (*func)(Datum, Datum, meosType), bool invert)
 {
+    fprintf(stderr, "arithop_tnumber_number\n");
+    fprintf(stderr, "\tParams: %s, %f, basetype: %d, oper: %d, invert: %d", temporal_out(temp, 4), datum_double(value, basetype), basetype, oper, invert);
   assert(tnumber_basetype(basetype));
   assert(temptype_basetype(temp->temptype) == basetype);
   /* If division test whether the denominator is zero */
@@ -184,6 +186,8 @@ arithop_tnumber_number(const Temporal *temp, Datum value, meosType basetype,
     }
   }
 
+    fprintf(stderr, "\tValid params\n");
+
   LiftedFunctionInfo lfinfo;
   memset(&lfinfo, 0, sizeof(LiftedFunctionInfo));
   lfinfo.func = (varfunc) func;
@@ -199,6 +203,8 @@ arithop_tnumber_number(const Temporal *temp, Datum value, meosType basetype,
   lfinfo.discont = CONTINUOUS;
   lfinfo.tpfunc_base = NULL;
   lfinfo.tpfunc = NULL;
+
+    fprintf(stderr, "Calling tfunc_temporal_base");
   return tfunc_temporal_base(temp, value, &lfinfo);
 }
 
