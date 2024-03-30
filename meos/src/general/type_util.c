@@ -342,7 +342,7 @@ Datum
 datum_div(Datum l, Datum r, meosType type)
 {
     fprintf(stderr, "datum_div\n");
-    fprintf(stderr, "Type: %d", type);
+    fprintf(stderr, "Params: %f, %f, %d\n", DatumGetFloat8(l), DatumGetFloat8(r), type);
   switch (type)
   {
     case T_INT4:
