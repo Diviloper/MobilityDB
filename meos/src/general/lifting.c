@@ -282,7 +282,7 @@ tfunc_base_base(Datum value1, Datum value2, LiftedFunctionInfo *lfinfo)
         } else {
             fprintf(stderr, "Calling func with value1 = %f, value2 = %f, argtype[0] = %d, argtype[1] = %d\n",
                     datum_double(value1, lfinfo->argtype[0]), datum_double(value2, lfinfo->argtype[1]), lfinfo->argtype[0], lfinfo->argtype[1]);
-            return (*lfinfo->func)(value1, value2, lfinfo->argtype[0], lfinfo->argtype[1]);
+            return (*lfinfo->func)(value1, value2, lfinfo->argtype[0]);
         }
     else
       return lfinfo->invert ?
