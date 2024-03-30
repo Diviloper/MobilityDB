@@ -271,6 +271,8 @@ datum2_ge(Datum l, Datum r, meosType type)
 Datum
 datum_add(Datum l, Datum r, meosType type)
 {
+    fprintf(stderr, "datum_div\n");
+    fprintf(stderr, "Params: %f, %f, %d\n", DatumGetFloat8(l), DatumGetFloat8(r), type);
   switch (type)
   {
     case T_INT4:
@@ -283,6 +285,7 @@ datum_add(Datum l, Datum r, meosType type)
       /* For dates we ALWAYS add integers */
       return DateADTGetDatum(DatumGetDateADT(l) + DatumGetInt32(r));
     default: /* Error! */
+        fprintf(stderr, "Invalid type: %d", type);
       meos_error(ERROR, MEOS_ERR_INTERNAL_TYPE_ERROR,
         "Unknown add function for base type: %s", meostype_name(type));
       return 0;
@@ -352,6 +355,7 @@ datum_div(Datum l, Datum r, meosType type)
     case T_FLOAT8:
       return Float8GetDatum(DatumGetFloat8(l) / DatumGetFloat8(r));
     default: /* Error! */
+        fprintf(stderr, "Invalid type: %d", type);
       meos_error(ERROR, MEOS_ERR_INTERNAL_TYPE_ERROR,
         "Unknown division function for base type: %s", meostype_name(type));
     return 0;
