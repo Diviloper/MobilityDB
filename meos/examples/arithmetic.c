@@ -10,6 +10,12 @@
 int main(void) {
     meos_initialize(NULL, NULL);
 
+    Temporal *tint = tint_in("[1@2020-03-01, 10@2020-03-10]");
+    Temporal *intdiv = div_tint_int(tint, 2);
+
+    printf("Original: %s\n", tint_out(tint));
+    printf("Divided by 2: %s\n", tint_out(intdiv));
+
     Temporal *tfloat = tfloat_in("[1@2020-03-01, 10@2020-03-10]");
     Temporal *div = div_tfloat_float(tfloat, 2.0);
 
