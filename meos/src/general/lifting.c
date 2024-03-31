@@ -269,10 +269,11 @@ static Datum
 tfunc_base_base(Datum value1, Datum value2, LiftedFunctionInfo *lfinfo)
 {
   /* Lifted functions may have from 0 to MAX_PARAMS parameters */
-  fprintf(stderr, "tfunc_base_base lfinfo->args = %d \n", lfinfo->args);
-  fprintf(stderr, "tfunc_base_base lfinfo->invert = %d \n", lfinfo->invert);
-  fprintf(stderr, "tfunc_base_base lfinfo->argtype[0] = %d \n", lfinfo->argtype[0]);
-  fprintf(stderr, "tfunc_base_base lfinfo->argtype[1] = %d \n", lfinfo->argtype[1]);
+  fprintf(stderr, "tfunc_base_base\n");
+  fprintf(stderr, "\tlfinfo->args = %d \n", lfinfo->args);
+  fprintf(stderr, "\tlfinfo->invert = %d \n", lfinfo->invert);
+  fprintf(stderr, "\tlfinfo->argtype[0] = %d \n", lfinfo->argtype[0]);
+  fprintf(stderr, "\tlfinfo->argtype[1] = %d \n", lfinfo->argtype[1]);
   assert(lfinfo->numparam >= 0 && lfinfo->numparam <= 1);
   if (lfinfo->numparam == 0)
   {
@@ -282,7 +283,7 @@ tfunc_base_base(Datum value1, Datum value2, LiftedFunctionInfo *lfinfo)
         } else {
             fprintf(stderr, "Calling func with value1 = %f, value2 = %f, argtype[0] = %d, argtype[1] = %d\n",
                     datum_double(value1, lfinfo->argtype[0]), datum_double(value2, lfinfo->argtype[1]), lfinfo->argtype[0], lfinfo->argtype[1]);
-            return (*lfinfo->func)(value1, value2, lfinfo->argtype[0]);
+            return (*lfinfo->func)(value1, value2, lfinfo->argtype[0], lfinfo->argtype[1]);
         }
     else
       return lfinfo->invert ?
