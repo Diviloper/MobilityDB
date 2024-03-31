@@ -3,6 +3,10 @@
 //
 
 
+// Compile with CLang:
+//     EXPORT DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:/opt/homebrew/lib
+//     clang -Wall -g -I/opt/homebrew/include -o arithmetic arithmetic.c -L/opt/homebrew/lib -lmeos
+
 #include <stdio.h>
 #include <meos.h>
 
