@@ -74,8 +74,6 @@ EAspatialrel_tpoint_tpoint(FunctionCallInfo fcinfo,
 {
   Temporal *temp1 = PG_GETARG_TEMPORAL_P(0);
   Temporal *temp2 = PG_GETARG_TEMPORAL_P(1);
-  /* Store fcinfo into a global variable */
-  store_fcinfo(fcinfo);
   int result = MEOS_FLAGS_GET_GEODETIC(temp1->flags) ?
     ea_spatialrel_tpoint_tpoint(temp1, temp2, func2, ever) :
     ea_spatialrel_tpoint_tpoint(temp1, temp2, func1, ever);
@@ -101,8 +99,6 @@ EAcontains_geo_tpoint(FunctionCallInfo fcinfo, bool ever)
 {
   GSERIALIZED *gs = PG_GETARG_GSERIALIZED_P(0);
   Temporal *temp = PG_GETARG_TEMPORAL_P(1);
-  /* Store fcinfo into a global variable */
-  store_fcinfo(fcinfo);
   int result = ever ? econtains_geo_tpoint(gs, temp) :
     acontains_geo_tpoint(gs, temp);
   PG_FREE_IF_COPY(gs, 0);
@@ -152,8 +148,6 @@ EAdisjoint_geo_tpoint(FunctionCallInfo fcinfo, bool ever)
 {
   GSERIALIZED *gs = PG_GETARG_GSERIALIZED_P(0);
   Temporal *temp = PG_GETARG_TEMPORAL_P(1);
-  /* Store fcinfo into a global variable */
-  store_fcinfo(fcinfo);
   int result = ever ? edisjoint_tpoint_geo(temp, gs) :
     adisjoint_tpoint_geo(temp, gs);
   PG_FREE_IF_COPY(temp, 1);
@@ -201,8 +195,6 @@ EAdisjoint_tpoint_geo(FunctionCallInfo fcinfo, bool ever)
 {
   Temporal *temp = PG_GETARG_TEMPORAL_P(0);
   GSERIALIZED *gs = PG_GETARG_GSERIALIZED_P(1);
-  /* Store fcinfo into a global variable */
-  store_fcinfo(fcinfo);
   int result = ever ? edisjoint_tpoint_geo(temp, gs) :
     adisjoint_tpoint_geo(temp, gs);
   PG_FREE_IF_COPY(temp, 0);
@@ -282,8 +274,6 @@ EAintersects_geo_tpoint(FunctionCallInfo fcinfo, bool ever)
 {
   GSERIALIZED *gs = PG_GETARG_GSERIALIZED_P(0);
   Temporal *temp = PG_GETARG_TEMPORAL_P(1);
-  /* Store fcinfo into a global variable */
-  store_fcinfo(fcinfo);
   int result = ever ?
     eintersects_tpoint_geo(temp, gs) : aintersects_tpoint_geo(temp, gs);
   PG_FREE_IF_COPY(gs, 0);
@@ -331,8 +321,6 @@ EAintersects_tpoint_geo(FunctionCallInfo fcinfo, bool ever)
 {
   Temporal *temp = PG_GETARG_TEMPORAL_P(0);
   GSERIALIZED *gs = PG_GETARG_GSERIALIZED_P(1);
-  /* Store fcinfo into a global variable */
-  store_fcinfo(fcinfo);
   int result = ever ?
     eintersects_tpoint_geo(temp, gs) : aintersects_tpoint_geo(temp, gs);
   PG_FREE_IF_COPY(temp, 0);
@@ -413,8 +401,6 @@ EAtouches_geo_tpoint(FunctionCallInfo fcinfo, bool ever)
 {
   GSERIALIZED *gs = PG_GETARG_GSERIALIZED_P(0);
   Temporal *temp = PG_GETARG_TEMPORAL_P(1);
-  /* Store fcinfo into a global variable */
-  store_fcinfo(fcinfo);
   int result = ever ? etouches_tpoint_geo(temp, gs) :
     atouches_tpoint_geo(temp, gs);
   PG_FREE_IF_COPY(temp, 1);
@@ -459,8 +445,6 @@ EAtouches_tpoint_geo(FunctionCallInfo fcinfo, bool ever)
 {
   GSERIALIZED *gs = PG_GETARG_GSERIALIZED_P(1);
   Temporal *temp = PG_GETARG_TEMPORAL_P(0);
-  /* Store fcinfo into a global variable */
-  store_fcinfo(fcinfo);
   int result = ever ? etouches_tpoint_geo(temp, gs) :
     atouches_tpoint_geo(temp, gs);
   PG_FREE_IF_COPY(temp, 0);
@@ -512,8 +496,6 @@ EAdwithin_geo_tpoint(FunctionCallInfo fcinfo, bool ever)
   GSERIALIZED *gs = PG_GETARG_GSERIALIZED_P(0);
   Temporal *temp = PG_GETARG_TEMPORAL_P(1);
   double dist = PG_GETARG_FLOAT8(2);
-  /* Store fcinfo into a global variable */
-  store_fcinfo(fcinfo);
   int result = ever ?
     edwithin_tpoint_geo(temp, gs, dist) :
     adwithin_tpoint_geo(temp, gs, dist);
@@ -563,8 +545,6 @@ EAdwithin_tpoint_geo(FunctionCallInfo fcinfo, bool ever)
   GSERIALIZED *gs = PG_GETARG_GSERIALIZED_P(1);
   Temporal *temp = PG_GETARG_TEMPORAL_P(0);
   double dist = PG_GETARG_FLOAT8(2);
-  /* Store fcinfo into a global variable */
-  store_fcinfo(fcinfo);
   int result = ever ? edwithin_tpoint_geo(temp, gs, dist) :
     adwithin_tpoint_geo(temp, gs, dist);
   PG_FREE_IF_COPY(temp, 0);
@@ -612,8 +592,6 @@ EAdwithin_tpoint_tpoint(FunctionCallInfo fcinfo, bool ever)
   Temporal *temp1 = PG_GETARG_TEMPORAL_P(0);
   Temporal *temp2 = PG_GETARG_TEMPORAL_P(1);
   double dist = PG_GETARG_FLOAT8(2);
-  /* Store fcinfo into a global variable */
-  store_fcinfo(fcinfo);
   int result = ever ? edwithin_tpoint_tpoint(temp1, temp2, dist) :
     adwithin_tpoint_tpoint(temp1, temp2, dist);
   PG_FREE_IF_COPY(temp1, 0);
