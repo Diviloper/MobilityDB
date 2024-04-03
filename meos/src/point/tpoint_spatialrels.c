@@ -545,8 +545,8 @@ eintersects_tpoint_geo(const Temporal *temp, const GSERIALIZED *gs)
     return -1;
 
   datum_func2 func = get_intersects_fn_gs(temp->flags, gs->gflags);
-  return spatialrel_tpoint_traj_geo(temp, gs, (Datum) NULL,
-    (varfunc) func, MEOS_FLAGS_GET_GEODETIC(temp->flags) ? 4 : 2, INVERT_NO);
+  return spatialrel_tpoint_traj_geo(temp, gs, (Datum) NULL, (varfunc) func, 2,
+    INVERT_NO);
 }
 
 /**
