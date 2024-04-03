@@ -125,7 +125,7 @@ Datum
 geog_intersects(Datum geog1, Datum geog2)
 {
   return BoolGetDatum(pgis_geography_dwithin(DatumGetGserializedP(geog1),
-    DatumGetGserializedP(geog2), 0.0, true));
+    DatumGetGserializedP(geog2), 0.00001, true));
 }
 
 #if 0 /* not used */
@@ -256,7 +256,7 @@ spatialrel_tpoint_traj_geo(const Temporal *temp, const GSERIALIZED *gs,
       ! ensure_valid_tpoint_geo(temp, gs) || gserialized_is_empty(gs))
     return -1;
 
-  assert(numparam == 2 || numparam == 3 || numparam == 4);
+  assert(numparam == 2 || numparam == 3);
   Datum geo = PointerGetDatum(gs);
   Datum traj = PointerGetDatum(tpoint_trajectory(temp));
   Datum result;
@@ -265,16 +265,10 @@ spatialrel_tpoint_traj_geo(const Temporal *temp, const GSERIALIZED *gs,
     datum_func2 func2 = (datum_func2) func;
     result = invert ? func2(geo, traj) : func2(traj, geo);
   }
-  else if (numparam == 3)
+  else /* numparam == 3 */
   {
     datum_func3 func3 = (datum_func3) func;
     result = invert ? func3(geo, traj, param) : func3(traj, geo, param);
-  }
-  else /* numparam == 4 */
-  {
-    datum_func4 func4 = (datum_func4) func;
-    result = invert ? func4(geo, traj, param, BoolGetDatum(true)) :
-      func4(traj, geo, param, BoolGetDatum(true));
   }
   pfree(DatumGetPointer(traj));
   return result ? 1 : 0;
