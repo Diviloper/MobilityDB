@@ -250,6 +250,7 @@ typedef Datum (*varfunc) (Datum, ...);
 /* Definition of a binary function with two or three Datum arguments */
 typedef Datum (*datum_func2) (Datum, Datum);
 typedef Datum (*datum_func3) (Datum, Datum, Datum);
+typedef Datum (*datum_func4) (Datum, Datum, Datum, Datum);
 
 /*****************************************************************************
  * fmgr macros temporal types

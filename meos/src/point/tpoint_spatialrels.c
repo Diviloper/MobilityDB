@@ -256,7 +256,7 @@ spatialrel_tpoint_traj_geo(const Temporal *temp, const GSERIALIZED *gs,
       ! ensure_valid_tpoint_geo(temp, gs) || gserialized_is_empty(gs))
     return -1;
 
-  assert(numparam == 2 || numparam == 3);
+  assert(numparam == 2 || numparam == 3 || numparam == 4);
   Datum geo = PointerGetDatum(gs);
   Datum traj = PointerGetDatum(tpoint_trajectory(temp));
   Datum result;
@@ -265,10 +265,16 @@ spatialrel_tpoint_traj_geo(const Temporal *temp, const GSERIALIZED *gs,
     datum_func2 func2 = (datum_func2) func;
     result = invert ? func2(geo, traj) : func2(traj, geo);
   }
-  else /* numparam == 3 */
+  else if (numparam == 3)
   {
     datum_func3 func3 = (datum_func3) func;
     result = invert ? func3(geo, traj, param) : func3(traj, geo, param);
+  }
+  else /* numparam == 4 */
+  {
+    datum_func4 func4 = (datum_func4) func;
+    result = invert ? func4(geo, traj, param, BoolGetDatum(true)) :
+      func4(traj, geo, param, BoolGetDatum(true));
   }
   pfree(DatumGetPointer(traj));
   return result ? 1 : 0;
@@ -546,7 +552,7 @@ eintersects_tpoint_geo(const Temporal *temp, const GSERIALIZED *gs)
 
   datum_func2 func = get_intersects_fn_gs(temp->flags, gs->gflags);
   return spatialrel_tpoint_traj_geo(temp, gs, (Datum) NULL,
-    (varfunc) func, 2, INVERT_NO);
+    (varfunc) func, MEOS_FLAGS_GET_GEODETIC(temp->flags) ? 4 : 2, INVERT_NO);
 }
 
 /**
@@ -614,13 +620,13 @@ etouches_tpoint_geo(const Temporal *temp, const GSERIALIZED *gs)
 {
   /* Ensure validity of the arguments */
   if (! ensure_not_null((void *) temp) || ! ensure_not_null((void *) gs) ||
-      ! ensure_valid_tpoint_geo(temp, gs) || gserialized_is_empty(gs))
+      ! ensure_not_geodetic(temp->flags) || gserialized_is_empty(gs) ||
+      ! ensure_valid_tpoint_geo(temp, gs))
     return -1;
 
   /* There is no need to do a bounding box test since this is done in
    * the SQL function definition */
-  varfunc func = (MEOS_FLAGS_GET_Z(temp->flags) && FLAGS_GET_Z(gs->gflags)) ?
-    (varfunc) &geom_intersects3d : (varfunc) &geom_intersects2d;
+  datum_func2 func = get_intersects_fn_gs(temp->flags, gs->gflags);
   GSERIALIZED *traj = tpoint_trajectory(temp);
   GSERIALIZED *gsbound = geometry_boundary(gs);
   bool result = false;
