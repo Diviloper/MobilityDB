@@ -2121,8 +2121,8 @@ extern TBox *tintbox_get_time_tile(TimestampTz t, const Interval *duration, Time
 extern TBox *tintbox_get_value_tile(int value, int vsize, int vorigin);
 extern TBox *tintbox_get_value_time_tile(int value, TimestampTz t, int vsize, const Interval *duration, int vorigin, TimestampTz torigin);
 extern TBox *tintbox_time_tiles(const TBox *box, const Interval *duration, TimestampTz torigin, int *count);
-extern TBox *tintbox_value_tiles(const TBox *box, int xsize, int xorigin, int *count);
-extern TBox *tintbox_value_time_tiles(const TBox *box, int xsize, const Interval *duration, int xorigin, TimestampTz torigin, int *count);
+extern TBox *tintbox_value_tiles(const TBox *box, int vsize, int vorigin, int *count);
+extern TBox *tintbox_value_time_tiles(const TBox *box, int vsize, const Interval *duration, int vorigin, TimestampTz torigin, int *count);
 extern Temporal **tpoint_space_split(const Temporal *temp, double xsize, double ysize, double zsize, const GSERIALIZED *sorigin, bool bitmatrix, bool border_inc, GSERIALIZED ***space_bins, int *count);
 extern Temporal **tpoint_space_time_split(const Temporal *temp, double xsize, double ysize, double zsize, const Interval *duration, const GSERIALIZED *sorigin, TimestampTz torigin, bool bitmatrix, bool border_inc, GSERIALIZED ***space_bins, TimestampTz **time_bins, int *count);
 extern Temporal **tpoint_time_split(const Temporal *temp, const Interval *duration, TimestampTz torigin, bool border_inc, TimestampTz **time_bins, int *count);
