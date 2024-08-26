@@ -97,6 +97,16 @@ jobs:
       - name: Check cmake
         run: which cmake
 
+      - name: cmake v
+        continue-on-error: true
+        run: cmake --version
+
+      - name: clear cache
+        run: hash -r
+
+      - name: cmake v
+        run: cmake --version      
+
       - name: Configure
         run: |
           mkdir build
