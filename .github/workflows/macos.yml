@@ -50,6 +50,21 @@ jobs:
       - name: Check brew prefix
         run: brew --prefix
 
+      - name: Check cmake location
+        run: ls -l /opt/homebrew/Cellar
+
+      - name: Check cmake location 2
+        run: ls -l /opt/homebrew/Cellar/cmake
+
+      - name: Check cmake location 3
+        run: ls -l /opt/homebrew/Cellar/cmake/3.30.2
+
+      - name: Check cmake location 4
+        run: ls -l /opt/homebrew/Cellar/cmake/3.30.2/share
+
+      - name: Check cmake location 5
+        run: ls -l /opt/homebrew/Cellar/cmake/3.30.2/share/cmake
+
       - name: Get dependencies from homebrew (cache)
         uses: tecolicom/actions-use-homebrew-tools@v1
         with:
