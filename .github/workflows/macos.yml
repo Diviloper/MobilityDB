@@ -76,6 +76,9 @@ jobs:
         with:
           tools: cmake postgresql postgis proj gsl
 
+      - name: Reinstall cmake
+        run: brew reinstall cmake
+
       - name: Check cmake location
         run: ls -l /opt/homebrew/Cellar
 
