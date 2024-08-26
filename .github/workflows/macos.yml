@@ -73,6 +73,9 @@ jobs:
         with:
           tools: cmake postgresql postgis proj gsl
 
+      - name: Check cmake
+        run: which cmake
+
       - name: Configure
         run: |
           mkdir build
