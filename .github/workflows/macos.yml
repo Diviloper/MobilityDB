@@ -50,6 +50,7 @@ jobs:
       - name: Get dependencies from homebrew (cache)
         uses: tecolicom/actions-use-homebrew-tools@v1
         with:
+          verbose: true
           tools: cmake postgresql postgis proj gsl
 
       - name: Reinstall cmake
